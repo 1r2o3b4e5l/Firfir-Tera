@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Role } from 'src/entities/role.enum';
+import { Role } from '../entities/role.enum';
 import * as jwt from 'jsonwebtoken';
 
 interface JwtPayload {
