@@ -9,6 +9,7 @@ import { RolesGuard } from './guards/roles.guard';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { UserModule } from './user/user.module';
 import * as bodyParser from 'body-parser';
+import { DatabaseModule } from './database/database.module';
 // import { CorsModule } from '@nestjs/platform-express';
 
 @Module({
@@ -19,14 +20,18 @@ import * as bodyParser from 'body-parser';
     }),
     MongooseModule.forRoot(process.env.DB_URI),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    AuthModule, RecipeModule, UserModule,
-    
+    AuthModule,
+    RecipeModule,
+    UserModule,
+    DatabaseModule,
   ],
-  providers: [{
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  }, Reflector, JwtStrategy]
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+    Reflector,
+    JwtStrategy,
+  ],
 })
-export class AppModule { 
- 
-}
+export class AppModule {}
