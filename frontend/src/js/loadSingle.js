@@ -1,6 +1,6 @@
 "use strict";
 const token_ = sessionStorage.getItem('token');
-const foodId = sessionStorage.getItem('id');
+const foodId = sessionStorage.getItem('id-food');
 console.log(foodId);
 fetch(`http://localhost:3000/recipes/${foodId}`, {
     headers: {
@@ -14,8 +14,8 @@ function handler(json) {
     console.log(json);
     let parent = document.getElementById('parent');
     let picture = document.createElement('img');
-    let imgpath = "http://localhost:3000/uploads/image-1705080843686-945165174.png";
-    picture.src = imgpath;
+    picture.src = json.image;
+    picture.classList.add('w-50');
     console.log(picture);
     parent.appendChild(picture);
     let wholeDiv = document.createElement('div');

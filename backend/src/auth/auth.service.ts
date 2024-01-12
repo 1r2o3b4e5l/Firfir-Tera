@@ -16,7 +16,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) { }
 
-  async signUp(signUpDto: SignUpDto): Promise<{ token: string, role: string[] }> {
+  async signUp(signUpDto: SignUpDto): Promise<{ token: string, role: string[], id: string }> {
     const { firstName, lastName, email, password, role } = signUpDto;
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -32,7 +32,7 @@ export class AuthService {
 
       const token = this.jwtService.sign({ id: user._id, role: user.role });
 
-      return { token: token, role: user.role };
+      return { token: token, role: user.role, id:user.id };
     } catch (error) {
       if (error instanceof MongoError && error.code === 11000) {
         throw new ConflictException('Duplicate email');
@@ -41,7 +41,7 @@ export class AuthService {
     }
   }
 
-  async login(loginDto: LoginDto): Promise<{ token: string, role: string[] }> {
+  async login(loginDto: LoginDto): Promise<{ token: string, role: string[], id:string }> {
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
     if (!user) {
@@ -56,6 +56,6 @@ export class AuthService {
 
     const token = this.jwtService.sign({ id: user._id, role: user.role });
 
-    return { token: token, role: user.role };
+    return { token: token, role: user.role, id:user.id };
   }
 }

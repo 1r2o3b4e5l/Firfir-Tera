@@ -2,6 +2,8 @@ const token = sessionStorage.getItem('token');
 const role = sessionStorage.getItem('role');
 const cook_id = sessionStorage.getItem('cook-id');
 
+console.log(token);
+
 
 if (role == 'normal'){
     const addDish = document.getElementById('add-dish');
@@ -52,14 +54,14 @@ setInterval(() => {
     const parent:any = document.getElementById("random");
     parent.addEventListener('click' , () => {
         const id:string= json._id
-        sessionStorage.setItem('id', id); // Fix: Use correct syntax for setting an item in sessionStorage
+        sessionStorage.setItem('id-food', id); // Fix: Use correct syntax for setting an item in sessionStorage
         window.location.href = 'singledish.html'
     })
     const title:any = document.getElementById('title');
     title.innerHTML = json.name;
     const img:any=document.getElementById('img');
     const description:any=document.getElementById('description');
-    img.src = json.thumbnail;
+    img.src = json.image;
     img.style.width = "50%"
     img.style.height = "50%"
     description.innerHTML=json.description;

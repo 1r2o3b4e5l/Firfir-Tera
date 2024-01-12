@@ -30,10 +30,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 console.log(data);
                 sessionStorage.setItem('token', data.token);
                 sessionStorage.setItem('role', data.role[0]);
-                sessionStorage.setItem('cook-id', data.id);
-                // console.log(sessionStorage.getItem('cook-id'));
+                sessionStorage.setItem('id', data.id);
+                console.log(sessionStorage.getItem('id'));
                 window.location.href = 'home.html'
             } else {
+                alert("incorrect password or email")
                 console.error('Form submission failed');
             }
         } catch (error) {

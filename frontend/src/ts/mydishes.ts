@@ -1,6 +1,7 @@
-let id_s = sessionStorage.getItem('cook-id') ;
+let id_s = sessionStorage.getItem('id') ;
 let theToken  = sessionStorage.getItem('token');
 let roLE = sessionStorage.getItem('role');
+console.log(id_s);
 if (roLE == 'normal'){
     const addDish = document.getElementById('add-dish');
     const mydishes = document.getElementById('my-dishes');
@@ -50,7 +51,7 @@ function display(json: Json[]): void {
         const img = document.createElement('img');
         img.src = iter.image;
         img.classList.add('img-fluid');
-        img.style.width = '10%';
+        img.style.width = '5%';
         img.style.height = '10%';
         flex.appendChild(img);
 
@@ -89,7 +90,7 @@ function display(json: Json[]): void {
         const edit = document.createElement('button');
         edit.classList.add('btn', 'btn-warning', 'm-3');
         edit.onclick = () => {
-            sessionStorage.setItem('id', iter._id);
+            sessionStorage.setItem('f_id', iter._id);
             window.location.href = 'editdish.html';
         };
         edit.textContent = 'Edit';

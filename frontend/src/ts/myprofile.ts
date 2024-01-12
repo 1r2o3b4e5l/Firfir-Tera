@@ -1,5 +1,5 @@
 const urlToken: string = sessionStorage.getItem('token') as string ;
-const cookId: string = sessionStorage.getItem('cook-id') as string;
+const cookId: string = sessionStorage.getItem('id') as string;
 const ROLE = sessionStorage.getItem('role');
 console.log(cookId, urlToken);
 
@@ -51,7 +51,7 @@ function handle(json:Profile) {
 
   nameVarElement = document.createElement('p');
   nameVarElement.innerHTML = json.firstName;
-  nameVarElement.classList.add('m-3', 'bg-secondary', 'p-3');
+  nameVarElement.classList.add('m-3', 'bg-secondary', 'p-3', 'text-white');
   nameVarElement.contentEditable = "true";
 
   nameWithContainer.appendChild(labelElement);
@@ -67,7 +67,7 @@ function handle(json:Profile) {
 
   fathersNameVarElement = document.createElement('p');
   fathersNameVarElement.innerHTML = json.lastName;
-  fathersNameVarElement.classList.add('m-3', 'container', 'bg-secondary', 'p-3');
+  fathersNameVarElement.classList.add('m-3', 'container', 'bg-secondary', 'p-3', 'text-white');
   fathersNameVarElement.contentEditable = "true";
 
   fathersNameWithContainer.appendChild(fathersNameLabelElement);
@@ -82,7 +82,7 @@ function handle(json:Profile) {
 
   emailVarElement = document.createElement('p');
   emailVarElement.innerHTML = json.email;
-  emailVarElement.classList.add('m-3', 'container', 'bg-secondary', 'p-3');
+  emailVarElement.classList.add('m-3', 'container', 'bg-secondary', 'p-3', 'text-white');
   emailVarElement.contentEditable = "true";
 
   emailWithContainer.appendChild(emailLabelElement);
@@ -140,4 +140,9 @@ function deleteProfile() {
     },
   });
   window.location.href = 'index.html';
+}
+
+function logout(){
+  sessionStorage.removeItem('id');
+  location.href='index.html';
 }

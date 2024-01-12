@@ -61,7 +61,7 @@ interface Json{
       description.textContent = iter.description;
       flex.appendChild(description);
       const idValue = iter._id;
-      sessionStorage.setItem('id', idValue);
+      sessionStorage.setItem('id-food', idValue);
       flex.onclick = () => {
       
         window.location.href = 'singledish.html'

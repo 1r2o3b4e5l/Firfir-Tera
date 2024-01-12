@@ -10,7 +10,8 @@ export class AuthController {
 
   @Post('signup/normal')
   signUpNormal(@Body() signUpDto: SignUpDto): Promise<{ token: string }> {
-    if (!signUpDto.role || signUpDto.role !== 'cook') {
+    if (!signUpDto.role || signUpDto.role !== 'normal') {
+     
       throw new UnauthorizedException('Invalid role');
     }
     signUpDto.role = ['normal'];

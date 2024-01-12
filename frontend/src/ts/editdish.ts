@@ -1,4 +1,4 @@
-let recipeid: any = sessionStorage.getItem('id');
+let recipeid: any = sessionStorage.getItem('f_id');
 let tokenId: any = sessionStorage.getItem('token');
 const rolE = sessionStorage.getItem('role');
 
@@ -49,22 +49,23 @@ function handler(json: Json): void {
     let parent: any = document.getElementById('parent');
     let picture: HTMLImageElement | null = document.createElement('img');
     picture.src = json.image;
+    picture.classList.add('w-50');
     parent.appendChild(picture);
     let wholeDiv = document.createElement('div');
-    wholeDiv.classList.add("w-md-75", "bg-white");
+    wholeDiv.classList.add("w-25", "bg-white");
     wholeDiv.style.margin = '5%';
 
     recipeName = document.createElement('h1');
     recipeName.innerHTML = json.name;
     recipeName.contentEditable = "true";
-    recipeName.classList.add('bg-secondary', 'border-primary', 'p-2');
+    recipeName.classList.add('bg-secondary', 'border-primary', 'p-2', 'text-white');
     wholeDiv.appendChild(recipeName);
     wholeDiv.classList.add("d-flex", "flex-column", "align-items-center", "justify-content-evenly");
 
     description = document.createElement('p');
     description.innerHTML = json.description;
     description.contentEditable = "true";
-    description.classList.add('bg-secondary', 'container', 'border-primary', 'p-2');
+    description.classList.add('bg-secondary', 'container', 'border-primary', 'p-2', 'text-white');
 
     wholeDiv.appendChild(description);
     let iconsRow = document.createElement('div');
@@ -77,7 +78,7 @@ function handler(json: Json): void {
     servingText = document.createElement('p');
     servingText.innerHTML = json.people.toString();
     servingText.contentEditable = "true";
-    iconServing.src = 'Images/people.png';
+    iconServing.src = '../Images/people.png';
     serving.appendChild(iconServing);
     serving.appendChild(servingText);
     serving.classList.add("m-5");
@@ -89,7 +90,7 @@ function handler(json: Json): void {
     prepTimeTest = document.createElement('p');
     prepTimeTest.innerHTML = json.cookTime.toString();
     prepTimeTest.contentEditable = "true";
-    iconTime.src = 'Images/stopwatch.png';
+    iconTime.src = '../Images/stopwatch.png';
     iconTime.style.marginLeft = '5px';
     preptime.appendChild(iconTime);
     preptime.appendChild(prepTimeTest);
@@ -124,20 +125,27 @@ function handler(json: Json): void {
 }
 
 function StepAndIng(json: Json): void {
-    let steps = json.steps;
-
+    const steps: string[] = JSON.parse(json.steps[0])
     stepDiv = document.getElementById("steps")!;
     for (const step of steps) {
         const div = document.createElement('div');
         const ptag = document.createElement('p');
         ptag.innerHTML = step;
         ptag.contentEditable = "true";
-        ptag.classList.add('bg-secondary', 'container', 'border-primary', 'p-2');
+        ptag.classList.add('bg-secondary', 'container', 'border-primary', 'p-2', 'text-white');
         ptag.appendChild(document.createElement('br'));
         div.appendChild(ptag);
         stepDiv.appendChild(div);
     }
-    let ings = json.ingredients;
+    let ings:any;
+    if (json.ingredients.length == 1) {
+        const ings: string[] = JSON.parse(json.ingredients[0])
+
+    }
+    else{
+        ings: json.ingredients
+    }
+    console.log(ings)
     ingDiv = document.getElementById("ingridients")!;
 
     for (const step of ings) {
@@ -145,7 +153,7 @@ function StepAndIng(json: Json): void {
         div.classList.add("d-flex", "flex-wrap");
         const ptag = document.createElement('p');
         ptag.contentEditable = "true";
-        ptag.classList.add('bg-secondary', 'container', 'border-primary', 'p-2');
+        ptag.classList.add('bg-secondary', 'container', 'border-primary', 'p-2', 'text-white');
         ptag.innerHTML = step;
         ptag.classList.add("d-flex", "flex-wrap");
         div.appendChild(ptag);

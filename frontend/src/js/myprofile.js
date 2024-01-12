@@ -1,6 +1,6 @@
 "use strict";
 const urlToken = sessionStorage.getItem('token');
-const cookId = sessionStorage.getItem('cook-id');
+const cookId = sessionStorage.getItem('id');
 const ROLE = sessionStorage.getItem('role');
 console.log(cookId, urlToken);
 if (ROLE == 'normal') {
@@ -35,7 +35,7 @@ function handle(json) {
     labelElement.classList.add('m-3', 'p-3');
     nameVarElement = document.createElement('p');
     nameVarElement.innerHTML = json.firstName;
-    nameVarElement.classList.add('m-3', 'bg-secondary', 'p-3');
+    nameVarElement.classList.add('m-3', 'bg-secondary', 'p-3', 'text-white');
     nameVarElement.contentEditable = "true";
     nameWithContainer.appendChild(labelElement);
     nameWithContainer.appendChild(nameVarElement);
@@ -47,7 +47,7 @@ function handle(json) {
     fathersNameLabelElement.classList.add('m-3', 'p-3');
     fathersNameVarElement = document.createElement('p');
     fathersNameVarElement.innerHTML = json.lastName;
-    fathersNameVarElement.classList.add('m-3', 'container', 'bg-secondary', 'p-3');
+    fathersNameVarElement.classList.add('m-3', 'container', 'bg-secondary', 'p-3', 'text-white');
     fathersNameVarElement.contentEditable = "true";
     fathersNameWithContainer.appendChild(fathersNameLabelElement);
     fathersNameWithContainer.appendChild(fathersNameVarElement);
@@ -59,7 +59,7 @@ function handle(json) {
     emailLabelElement.classList.add('m-3', 'p-3');
     emailVarElement = document.createElement('p');
     emailVarElement.innerHTML = json.email;
-    emailVarElement.classList.add('m-3', 'container', 'bg-secondary', 'p-3');
+    emailVarElement.classList.add('m-3', 'container', 'bg-secondary', 'p-3', 'text-white');
     emailVarElement.contentEditable = "true";
     emailWithContainer.appendChild(emailLabelElement);
     emailWithContainer.appendChild(emailVarElement);
@@ -106,4 +106,8 @@ function deleteProfile() {
         },
     });
     window.location.href = 'index.html';
+}
+function logout() {
+    sessionStorage.removeItem('id');
+    location.href = 'index.html';
 }
