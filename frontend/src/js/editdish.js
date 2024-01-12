@@ -100,6 +100,7 @@ function handler(json) {
 }
 function StepAndIng(json) {
     const steps = JSON.parse(json.steps[0]);
+    console.log(steps);
     stepDiv = document.getElementById("steps");
     for (const step of steps) {
         const div = document.createElement('div');
@@ -111,13 +112,7 @@ function StepAndIng(json) {
         div.appendChild(ptag);
         stepDiv.appendChild(div);
     }
-    let ings;
-    if (json.ingredients.length == 1) {
-        const ings = JSON.parse(json.ingredients[0]);
-    }
-    else {
-        ings: json.ingredients;
-    }
+    const ings = JSON.parse(json.ingredients[0]);
     console.log(ings);
     ingDiv = document.getElementById("ingridients");
     for (const step of ings) {
@@ -154,8 +149,8 @@ function sendPatch() {
         cookTime: newCookTime,
         fasting: newFasting,
         type: newType,
-        steps: newSteps,
-        ingredients: newIngs
+        steps: JSON.stringify(newSteps),
+        ingredients: JSON.stringify(newIngs)
     };
     const dataString = JSON.stringify(data);
     console.log(dataString, recipeid, tokenId);

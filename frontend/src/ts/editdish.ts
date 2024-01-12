@@ -126,6 +126,7 @@ function handler(json: Json): void {
 
 function StepAndIng(json: Json): void {
     const steps: string[] = JSON.parse(json.steps[0])
+    console.log(steps)
     stepDiv = document.getElementById("steps")!;
     for (const step of steps) {
         const div = document.createElement('div');
@@ -137,14 +138,9 @@ function StepAndIng(json: Json): void {
         div.appendChild(ptag);
         stepDiv.appendChild(div);
     }
-    let ings:any;
-    if (json.ingredients.length == 1) {
-        const ings: string[] = JSON.parse(json.ingredients[0])
 
-    }
-    else{
-        ings: json.ingredients
-    }
+    const ings: string[] = JSON.parse(json.ingredients[0])
+
     console.log(ings)
     ingDiv = document.getElementById("ingridients")!;
 
@@ -184,8 +180,8 @@ function sendPatch(): void {
         cookTime: newCookTime,
         fasting: newFasting,
         type: newType,
-        steps: newSteps,
-        ingredients: newIngs
+        steps: JSON.stringify(newSteps),
+        ingredients: JSON.stringify(newIngs)
     };
     const dataString = JSON.stringify(data);
     console.log(dataString, recipeid, tokenId);
