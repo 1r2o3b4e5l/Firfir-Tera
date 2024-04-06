@@ -10,6 +10,8 @@ import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { UserModule } from './user/user.module';
 import * as bodyParser from 'body-parser';
 import { DatabaseModule } from './database/database.module';
+import { CommentModule } from './comment/comment.module';
+
 // import { CorsModule } from '@nestjs/platform-express';
 
 @Module({
@@ -22,6 +24,7 @@ import { DatabaseModule } from './database/database.module';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     AuthModule,
     RecipeModule,
+    CommentModule,
     UserModule,
     DatabaseModule,
   ],
