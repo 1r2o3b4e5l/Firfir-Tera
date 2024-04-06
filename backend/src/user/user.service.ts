@@ -11,41 +11,42 @@ export class UserService {
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
-  ) { }
+  ) {}
 
   async getById(userId: string) {
-
     let user;
     try {
       user = await this.userModel.findById(userId).exec();
-    }
-    catch {
-      throw new NotFoundException('Could not find user')
+    } catch {
+      throw new NotFoundException('Could not find user');
     }
     if (!user) {
-      throw new NotFoundException('Could not find user')
+      throw new NotFoundException('Could not find user');
     }
-    return user
+    return user;
   }
 
-  async updateById(userId: string, firstName: string, lastName: string, email: string ) {
-    let updated ;
-    try{
-        updated = await this.userModel.findById(userId).exec();
-    }
-    catch{
-        throw new NotFoundException('could not find reicpe')
+  async updateById(
+    userId: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+  ) {
+    let updated;
+    try {
+      updated = await this.userModel.findById(userId).exec();
+    } catch {
+      throw new NotFoundException('could not find reicpe');
     }
 
-    if (firstName){
-        updated.firstName = firstName   
+    if (firstName) {
+      updated.firstName = firstName;
     }
-    if (lastName){
-        updated.lastName= lastName
+    if (lastName) {
+      updated.lastName = lastName;
     }
-    if (email){
-        updated.email = email
-
+    if (email) {
+      updated.email = email;
     }
     updated.save();
   }
@@ -58,5 +59,25 @@ export class UserService {
     }
 
     return deletedAccount as User;
+  }
+
+  // here the function get all user for
+  async getAllUsers(): Promise<User[]> {
+    const users = await this.userModel.find().exec();
+    return users;
+  }
+  // here the function can change a role
+  async changeRole(userId: string, role: string) {
+    let user;
+    try {
+      user = await this.userModel.findById(userId).exec();
+    } catch {
+      throw new NotFoundException('Could not find user');
+    }
+    if (!user) {
+      throw new NotFoundException('Could not find user');
+    }
+    user.role = role;
+    user.save();
   }
 }
