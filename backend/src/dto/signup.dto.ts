@@ -29,9 +29,9 @@ export class SignUpDto {
 
   @IsOptional()
   @IsString()
-  title: string;
-
-  @IsOptional()
-  @IsString()
   bio: string;
+
+  @IsString()
+  @IsNotEmpty()
+  image: string;
 }

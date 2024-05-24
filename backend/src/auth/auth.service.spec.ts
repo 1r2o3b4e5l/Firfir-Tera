@@ -51,11 +51,13 @@ describe('AuthService', () => {
           role: ['normal'],
           title: 'Title of Abebe',
           bio: 'Bio of Abebe',
+          image: 'image of Abebe',
         };
 
         const createdUser = {
           ...signUpDto,
           _id: 'a uuid',
+
           password: await bcrypt.hash(signUpDto.password, 10),
         };
 
@@ -130,7 +132,9 @@ describe('AuthService', () => {
     it('should throw UnauthorizedException if user is not found', async () => {
       mockUserModel.findOne.mockResolvedValue(null);
 
-      await expect(service.login(loginDto)).rejects.toThrow(UnauthorizedException);
+      await expect(service.login(loginDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
 
     it('should throw UnauthorizedException if password is incorrect', async () => {
@@ -142,7 +146,9 @@ describe('AuthService', () => {
 
       mockUserModel.findOne.mockResolvedValue(user);
 
-      await expect(service.login(loginDto)).rejects.toThrow(UnauthorizedException);
+      await expect(service.login(loginDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
   });
 });

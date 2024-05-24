@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from '../schemas/user.schema';
@@ -14,10 +18,12 @@ export class AuthService {
     @InjectModel(User.name)
     private userModel: Model<User>,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
-  async signUp(signUpDto: SignUpDto): Promise<{ token: string, role: string[], id: string }> {
-    const { firstName, lastName, email, password, role } = signUpDto;
+  async signUp(
+    signUpDto: SignUpDto,
+  ): Promise<{ token: string; role: string[]; id: string }> {
+    const { firstName, lastName, email, password, role, image } = signUpDto;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -28,11 +34,12 @@ export class AuthService {
         email,
         password: hashedPassword,
         role: Array.isArray(role) ? role : [role],
+        image,
       });
 
       const token = this.jwtService.sign({ id: user._id, role: user.role });
 
-      return { token: token, role: user.role, id:user.id };
+      return { token: token, role: user.role, id: user.id };
     } catch (error) {
       if (error instanceof MongoError && error.code === 11000) {
         throw new ConflictException('Duplicate email');
@@ -41,11 +48,15 @@ export class AuthService {
     }
   }
 
-  async login(loginDto: LoginDto): Promise<{ token: string, role: string[], id:string }> {
+  async login(
+    loginDto: LoginDto,
+  ): Promise<{ token: string; role: string[]; id: string }> {
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
     if (!user) {
-      throw new UnauthorizedException('User is not registered yet please signup.');
+      throw new UnauthorizedException(
+        'User is not registered yet please signup.',
+      );
     }
 
     const isPasswordMatched = await bcrypt.compare(password, user.password);
@@ -56,6 +67,6 @@ export class AuthService {
 
     const token = this.jwtService.sign({ id: user._id, role: user.role });
 
-    return { token: token, role: user.role, id:user.id };
+    return { token: token, role: user.role, id: user.id };
   }
 }

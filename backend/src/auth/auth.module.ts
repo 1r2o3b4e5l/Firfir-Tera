@@ -7,6 +7,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UserSchema } from '../schemas/user.schema';
+import { UploadService } from 'src/Upload/upload.service';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { UserSchema } from '../schemas/user.schema';
   ],
 
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, UploadService],
   exports: [JwtStrategy, PassportModule, AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}

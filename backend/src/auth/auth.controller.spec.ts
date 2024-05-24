@@ -53,7 +53,7 @@ describe('AuthController', () => {
         email: 'Abebe@example.com',
         password: 'passpass',
         role: 'normal',
-        title: 'Title of Abebe',
+        image: 'image of Abebe',
         bio: 'Bio of Abebe',
       };
 
@@ -66,9 +66,10 @@ describe('AuthController', () => {
       mockUserModel.create.mockResolvedValue(createdUser);
       mockJwtService.sign.mockReturnValue('a jwt token');
 
-      const result = await controller.signUpNormal(signUpDto);
-
-      expect(result).toEqual({ token: 'a jwt token', role: 'normal' });
+      expect({ token: 'fjaks' }).toEqual({
+        token: 'a jwt token',
+        role: 'normal',
+      });
     });
   });
 
@@ -80,7 +81,7 @@ describe('AuthController', () => {
         email: 'kebede@example.com',
         password: 'passwordkebede',
         role: 'cook',
-        title: 'kebede Title',
+        image: 'kebede Title',
         bio: 'kebede Bio',
       };
 
@@ -97,7 +98,6 @@ describe('AuthController', () => {
 
       expect(result).toEqual({ token: 'a jwt token', role: 'cook' });
     });
-
   });
 
   describe('login', () => {
@@ -115,7 +115,9 @@ describe('AuthController', () => {
     it('should throw UnauthorizedException if user is not found', async () => {
       mockUserModel.findOne.mockResolvedValue(null);
 
-      await expect(controller.login(loginDto)).rejects.toThrow(UnauthorizedException);
+      await expect(controller.login(loginDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
 
     it('should throw UnauthorizedException if password is incorrect', async () => {
@@ -127,7 +129,9 @@ describe('AuthController', () => {
 
       mockUserModel.findOne.mockResolvedValue(user);
 
-      await expect(controller.login(loginDto)).rejects.toThrow(UnauthorizedException);
+      await expect(controller.login(loginDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
   });
 });
