@@ -81,15 +81,22 @@ export class RecipeService {
   }
 
   async find(query: Query): Promise<Recipe[]> {
+    console.log(query);
     try {
       const keyword: any = {};
 
       if (query.keyword) {
-        keyword.title = {
-          $regex: `* ${query.keyword}.*`,
+        keyword.name = {
+          $regex: `${query.keyword}`,
+          $options: 'i',
+        };
+        keyword.type = {
+          $regex: `${query.category}`,
           $options: 'i',
         };
       }
+
+      console.log(keyword);
 
       const recipes = await this.recipeModel.find(keyword);
       return recipes;

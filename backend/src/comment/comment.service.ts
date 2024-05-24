@@ -12,7 +12,9 @@ export class CommentService {
 
   // it accept recipe id and return the array of comment object from recipy comment property
   async getComments(recipeId: string): Promise<Comment[]> {
-    const comments = await this.commentModel.find({ recipeId });
+    const comments = await this.commentModel
+      .find({ recipeId })
+      .populate('userId');
     return comments;
   }
   // it accept commentId and comment property called text and return the updated comment objext

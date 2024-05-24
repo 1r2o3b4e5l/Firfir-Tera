@@ -67,8 +67,8 @@ export class RecipeController {
       type,
       file.path,
     );
-
-    const filePath = `../../backend/uploads/${file.filename}`;
+    const serverBaseURL = 'http://10.0.2.2:3000/uploads/';
+    const filePath = `${serverBaseURL}${file.filename}`;
     const createdRecipe = await this.recipeService.insertRecipe(
       {
         name,
@@ -89,6 +89,7 @@ export class RecipeController {
 
   @Get('query')
   async search(@Query() query: ExpressQuery): Promise<Recipe[]> {
+    console.log(query);
     return this.recipeService.find(query);
   }
 

@@ -2,20 +2,23 @@ import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from '../dto/login.dto';
 import { SignUpDto } from '../dto/signup.dto';
-
+import e from 'express';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
-  @Post('signup/normal')
+  @Post('signup')
   signUpNormal(@Body() signUpDto: SignUpDto): Promise<{ token: string }> {
-    if (!signUpDto.role || signUpDto.role !== 'normal') {
-     
-      throw new UnauthorizedException('Invalid role');
+    if (!signUpDto.role || signUpDto.role == 'normal') {
+      signUpDto.role = ['normal'];
+      console.log('am here');
+      return this.authService.signUp(signUpDto);
+    } else if (signUpDto.role == 'cook') {
+      signUpDto.role = ['cook'];
+      return this.authService.signUp(signUpDto);
     }
-    signUpDto.role = ['normal'];
-    return this.authService.signUp(signUpDto);
+    throw new UnauthorizedException('Invalid role');
   }
 
   @Post('signup/cook')

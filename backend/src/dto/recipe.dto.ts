@@ -1,34 +1,37 @@
-import { IsArray, IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
-import { Category } from "../schemas/recipe.schema";
-
+import {
+  IsArray,
+  IsBoolean,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import { Category } from '../schemas/recipe.schema';
 
 export class createRecipeDto {
   @IsString()
   @IsNotEmpty()
-   name: string;
+  name: string;
 
-  @IsString() 
+  @IsString()
   @IsNotEmpty()
-   description: string;
+  description: string;
 
   @IsNumber()
   @IsNotEmpty()
-
-   cookTime: number;
+  cookTime: string;
 
   @IsNumber()
   @IsNotEmpty()
-
-  people: number;
+  people: string;
 
   @IsArray()
   @IsNotEmpty()
-
   ingredients: string[];
 
   @IsArray()
   @IsNotEmpty()
-
   steps: string[];
 
   @IsBoolean()
@@ -46,16 +49,15 @@ export class createRecipeDto {
   @IsOptional()
   @IsString()
   cook_id: string;
-
 }
 export class updateRecipeDto {
   @IsString()
   @IsOptional()
-   name: string;
+  name: string;
 
-  @IsString() 
+  @IsString()
   @IsOptional()
-   description: string;
+  description: string;
 
   @IsNumber()
   @IsOptional()
@@ -88,6 +90,4 @@ export class updateRecipeDto {
   @IsString()
   @IsOptional()
   cook_id: string;
-
 }
-
