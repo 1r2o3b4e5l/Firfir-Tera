@@ -30,7 +30,7 @@ export class Recipe {
   steps: string[];
 
   @Prop()
-  fasting: boolean;
+  fasting: string;
 
   @Prop()
   type: Category;
@@ -40,7 +40,6 @@ export class Recipe {
 
   @Prop()
   cook_id: string;
-
 }
 
 export const RecipeSchema = SchemaFactory.createForClass(Recipe);

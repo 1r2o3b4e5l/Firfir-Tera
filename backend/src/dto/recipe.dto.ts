@@ -36,7 +36,7 @@ export class createRecipeDto {
 
   @IsBoolean()
   @IsNotEmpty()
-  fasting: boolean;
+  fasting: string;
 
   @IsNotEmpty()
   @IsEnum(Category, { message: 'Please enter the appropriate category!!' })
@@ -77,7 +77,7 @@ export class updateRecipeDto {
 
   @IsBoolean()
   @IsOptional()
-  fasting: boolean;
+  fasting: string;
 
   @IsOptional()
   @IsEnum(Category, { message: 'Please enter the appropriate category!!' })

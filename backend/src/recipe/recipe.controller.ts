@@ -48,7 +48,7 @@ export class RecipeController {
     @Body('people') people: number,
     @Body('ingredients') ingredients: string[],
     @Body('steps') steps: string[],
-    @Body('fasting') fasting: boolean,
+    @Body('fasting') fasting: string,
     @Body('type') type: Category,
     @UploadedFile() file: Express.Multer.File,
     @Headers('Authorization') authorization: string,
@@ -143,7 +143,7 @@ export class RecipeController {
     @Body('people') people: number,
     @Body('steps') steps: string[],
     @Body('ingredients') ings: string[],
-    @Body('fasting') fasting: boolean,
+    @Body('fasting') fasting: string,
     @Body('type') type: string,
     @Body('image') image: string,
   ) {
