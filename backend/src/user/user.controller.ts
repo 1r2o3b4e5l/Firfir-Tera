@@ -6,6 +6,8 @@ import {
   Get,
   Patch,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 
@@ -15,11 +17,17 @@ import { AuthGuard } from '@nestjs/passport';
 import { Role } from 'src/entities/role.enum';
 import { Roles } from 'src/decorators/roles.decorator';
 import { RolesGuard } from 'src/guards/roles.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UploadService } from 'src/Upload/upload.service';
+import { multerConfig } from 'src/Upload/multer.config';
 
 @Controller('user')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly uploadService: UploadService,
+  ) {}
 
   @Get(':id')
   async getById(@Param('id') userId: string): Promise<User> {
@@ -27,14 +35,20 @@ export class UserController {
   }
 
   @Patch(':id')
+  @UseInterceptors(FileInterceptor('image', multerConfig))
   async updateUser(
     @Param('id') userId: string,
     @Body('firstName') firstName: string,
     @Body('lastName') lastName: string,
     @Body('email') email: string,
+    @UploadedFile() file: Express.Multer.File,
   ) {
+    this.uploadService.uploadFile(file);
+
+    const serverBaseURL = 'http://10.0.2.2:3000/uploads/';
+    const filePath = `${serverBaseURL}${file.filename}`;
     try {
-      this.userService.updateById(userId, firstName, lastName, email);
+      this.userService.updateById(userId, firstName, lastName, email, filePath);
     } catch {
       throw new Error('could not update user');
     }

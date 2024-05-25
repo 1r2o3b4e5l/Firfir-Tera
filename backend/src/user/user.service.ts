@@ -31,6 +31,7 @@ export class UserService {
     firstName: string,
     lastName: string,
     email: string,
+    image: string,
   ) {
     let updated;
     try {
@@ -47,6 +48,9 @@ export class UserService {
     }
     if (email) {
       updated.email = email;
+    }
+    if (image) {
+      updated.image = image;
     }
     updated.save();
   }
