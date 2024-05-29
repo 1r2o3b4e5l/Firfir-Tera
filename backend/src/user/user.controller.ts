@@ -56,6 +56,7 @@ export class UserController {
 
   @Delete(':id')
   async deleteUser(@Param('id') userId: string): Promise<User> {
+    console.log(userId);
     return this.userService.deleteById(userId);
   }
 
@@ -68,7 +69,7 @@ export class UserController {
 
   @Patch('/changeRole')
   @Roles(Role.ADMIN)
-  async updateRole(@Body('Userid') userId: string, @Body('role') role: string) {
+  async updateRole(@Body('userId') userId: string, @Body('role') role: string) {
     try {
       this.userService.changeRole(userId, role);
     } catch {

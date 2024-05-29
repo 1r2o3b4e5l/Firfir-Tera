@@ -14,7 +14,7 @@ export class CommentService {
   async getComments(recipeId: string): Promise<Comment[]> {
     const comments = await this.commentModel
       .find({ recipeId })
-      .populate('userId');
+      .populate({ path: 'userId', model: 'User' });
     return comments;
   }
   // it accept commentId and comment property called text and return the updated comment objext
@@ -42,9 +42,9 @@ export class CommentService {
     userId: string,
   ): Promise<Comment> {
     const newComment = await this.commentModel.create({
-      recipeId,
+      recipeId: recipeId,
       text: comment,
-      userId,
+      userId: userId,
     });
 
     return newComment;

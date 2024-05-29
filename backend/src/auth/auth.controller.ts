@@ -62,6 +62,17 @@ export class AuthController {
         password,
         image: filePath,
       });
+    } else if (role == 'admin') {
+      role1 = ['admin'];
+      return this.authService.signUp({
+        role: role1,
+        bio,
+        firstName,
+        lastName,
+        email,
+        password,
+        image: filePath,
+      });
     }
     throw new UnauthorizedException('Invalid role');
   }

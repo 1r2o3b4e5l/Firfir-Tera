@@ -41,6 +41,7 @@ export class RecipeController {
   @Post('new')
   @UseInterceptors(FileInterceptor('image', multerConfig))
   @Roles(Role.COOK)
+  @Roles(Role.ADMIN)
   async createRecipe(
     @Body('name') name: string,
     @Body('description') description: string,
@@ -135,6 +136,7 @@ export class RecipeController {
 
   @Patch(':id')
   @Roles(Role.COOK)
+  @Roles(Role.ADMIN)
   async updateProduct(
     @Param('id') recipeId: string,
     @Body('name') recipeName: string,

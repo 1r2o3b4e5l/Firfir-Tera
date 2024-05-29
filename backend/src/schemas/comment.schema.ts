@@ -1,13 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Comment {
-  @Prop()
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   userId: string;
-  @Prop()
+  @Prop({ required: true })
   recipeId: string;
 
-  @Prop()
+  @Prop({ required: true })
   text: string;
 
   @Prop()
