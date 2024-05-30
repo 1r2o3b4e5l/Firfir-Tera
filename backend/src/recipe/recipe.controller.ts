@@ -57,7 +57,7 @@ export class RecipeController {
     this.uploadService.uploadFile(file);
 
     console.log(
-      'the file is',
+      'the file is that created',
       name,
       description,
       cookTime,
@@ -68,6 +68,7 @@ export class RecipeController {
       type,
       file.path,
     );
+
     const serverBaseURL = 'http://10.0.2.2:3000/uploads/';
     const filePath = `${serverBaseURL}${file.filename}`;
     const createdRecipe = await this.recipeService.insertRecipe(
@@ -135,8 +136,7 @@ export class RecipeController {
   // }
 
   @Patch(':id')
-  @Roles(Role.COOK)
-  @Roles(Role.ADMIN)
+  @Roles(Role.COOK, Role.ADMIN)
   async updateProduct(
     @Param('id') recipeId: string,
     @Body('name') recipeName: string,

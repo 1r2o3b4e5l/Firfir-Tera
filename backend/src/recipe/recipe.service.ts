@@ -118,6 +118,15 @@ export class RecipeService {
         'Only cooks are allowed to create recipes',
       );
     }
+
+    // Parse ingredients and steps from strings into arrays
+    if (typeof recipe.ingredients === 'string') {
+      recipe.ingredients = JSON.parse(recipe.ingredients);
+    }
+    if (typeof recipe.steps === 'string') {
+      recipe.steps = JSON.parse(recipe.steps);
+    }
+
     console.log(recipe);
     const createdRecipe = await this.recipeModel.create(recipe);
     return createdRecipe;
