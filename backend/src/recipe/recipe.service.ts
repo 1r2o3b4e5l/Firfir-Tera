@@ -154,7 +154,7 @@ export class RecipeService {
     return updatedRecipe;
   }
 
-  async updateRecipe(
+  async updateRecipe({
     recipeId,
     recipeName,
     recipeDesc,
@@ -165,14 +165,33 @@ export class RecipeService {
     fasting,
     type,
     image,
-  ) {
+  }: {
+    recipeId: string;
+    recipeName: string;
+    recipeDesc: string;
+    cooktime: number;
+    people: number;
+    steps: string[];
+    ings: string[];
+    fasting: string;
+    type: string;
+    image: string;
+  }) {
     console.log(recipeId, recipeName);
+
+    if (typeof ings === 'string') {
+      ings = JSON.parse(ings);
+    }
+    if (typeof steps === 'string') {
+      steps = JSON.parse(steps);
+    }
     let updated;
     try {
       updated = await this.recipeModel.findById(recipeId);
     } catch {
       throw new NotFoundException('could not find reicpe');
     }
+
     if (recipeName) {
       updated.name = recipeName;
     }
@@ -191,7 +210,9 @@ export class RecipeService {
     if (ings) {
       updated.ingredients = ings;
     }
-    updated.fasting = fasting;
+    if (fasting) {
+      updated.fasting = fasting;
+    }
     if (type) {
       updated.type = type;
     }

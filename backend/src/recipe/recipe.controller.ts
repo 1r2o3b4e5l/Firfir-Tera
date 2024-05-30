@@ -56,19 +56,6 @@ export class RecipeController {
   ): Promise<Recipe> {
     this.uploadService.uploadFile(file);
 
-    console.log(
-      'the file is that created',
-      name,
-      description,
-      cookTime,
-      people,
-      ingredients,
-      steps,
-      fasting,
-      type,
-      file.path,
-    );
-
     const serverBaseURL = 'http://10.0.2.2:3000/uploads/';
     const filePath = `${serverBaseURL}${file.filename}`;
     const createdRecipe = await this.recipeService.insertRecipe(
@@ -136,21 +123,30 @@ export class RecipeController {
   // }
 
   @Patch(':id')
-  @Roles(Role.COOK, Role.ADMIN)
-  async updateProduct(
-    @Param('id') recipeId: string,
+  @UseInterceptors(FileInterceptor('image', multerConfig))
+  @Roles(Role.COOK)
+  @Roles(Role.ADMIN)
+  async updateRecipe(
+    @Param('id') recipeId,
     @Body('name') recipeName: string,
     @Body('description') recipeDesc: string,
     @Body('cookTime') cooktime: number,
     @Body('people') people: number,
-    @Body('steps') steps: string[],
     @Body('ingredients') ings: string[],
+    @Body('steps') steps: string[],
     @Body('fasting') fasting: string,
-    @Body('type') type: string,
-    @Body('image') image: string,
+    @Body('type') type: Category,
+    @UploadedFile() file: Express.Multer.File,
+    @Headers('Authorization') authorization: string,
   ) {
-    console.log('the Id is:', recipeId);
-    return await this.recipeService.updateRecipe(
+    const serverBaseURL = 'http://10.0.2.2:3000/uploads/';
+    let filePath;
+    if (file) {
+      this.uploadService.uploadFile(file);
+      const filePath = `${serverBaseURL}${file.filename}`;
+    }
+
+    return await this.recipeService.updateRecipe({
       recipeId,
       recipeName,
       recipeDesc,
@@ -160,8 +156,8 @@ export class RecipeController {
       ings,
       fasting,
       type,
-      image,
-    );
+      image: filePath,
+    });
   }
 
   @Delete(':id')

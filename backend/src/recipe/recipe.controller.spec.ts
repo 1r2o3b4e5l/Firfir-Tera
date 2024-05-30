@@ -1,27 +1,27 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { RecipeController } from "./recipe.controller";
-import { RecipeService } from "./recipe.service";
-import { getModelToken } from "@nestjs/mongoose";
-import { Category, Recipe } from "../schemas/recipe.schema";
-import { NotFoundException } from "@nestjs/common";
-import { Model } from "mongoose";
-import { UploadService } from "../Upload/upload.service";
+import { Test, TestingModule } from '@nestjs/testing';
+import { RecipeController } from './recipe.controller';
+import { RecipeService } from './recipe.service';
+import { getModelToken } from '@nestjs/mongoose';
+import { Category, Recipe } from '../schemas/recipe.schema';
+import { NotFoundException } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { UploadService } from '../Upload/upload.service';
 
-describe("RecipeController", () => {
+describe('RecipeController', () => {
   let controller: RecipeController;
   let service: RecipeService;
 
   const realRecipeData: Recipe = {
-    name: "Spaghetti Bolognese",
-    description: "Classic Italian pasta dish",
+    name: 'Spaghetti Bolognese',
+    description: 'Classic Italian pasta dish',
     cookTime: 30,
     people: 4,
-    ingredients: ["Spaghetti", "Tomato Sauce", "Ground Beef"],
-    steps: ["Boil water", "Cook spaghetti", "Prepare Bolognese sauce"],
-    fasting: false,
+    ingredients: ['Spaghetti', 'Tomato Sauce', 'Ground Beef'],
+    steps: ['Boil water', 'Cook spaghetti', 'Prepare Bolognese sauce'],
+    fasting: 'fasting',
     type: Category.DINNER,
-    image: "https://example.com/spaghetti-bolognese.jpg",
-    cook_id: "someCookId",
+    image: 'https://example.com/spaghetti-bolognese.jpg',
+    cook_id: 'someCookId',
   };
 
   const mockRecipeModel = {
@@ -58,23 +58,23 @@ describe("RecipeController", () => {
     jest.clearAllMocks();
   });
 
-  it("should be defined", () => {
+  it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
-  describe("getAllRecipes", () => {
-    it("should return an array of recipes", async () => {
+  describe('getAllRecipes', () => {
+    it('should return an array of recipes', async () => {
       const result = await controller.getAllRecipes();
       expect(result).toEqual([realRecipeData]);
     });
   });
 
-  describe("search", () => {
-    it("should return recipes based on the provided query", async () => {
-      const mockQuery = { name: "ndjfd" };
+  describe('search', () => {
+    it('should return recipes based on the provided query', async () => {
+      const mockQuery = { name: 'ndjfd' };
       const mockRecipes: Recipe[] = [realRecipeData];
 
-      jest.spyOn(service, "find").mockResolvedValueOnce(mockRecipes);
+      jest.spyOn(service, 'find').mockResolvedValueOnce(mockRecipes);
 
       const result = await controller.search(mockQuery);
 
@@ -84,12 +84,12 @@ describe("RecipeController", () => {
     });
   });
 
-  describe("getSingleRecipe", () => {
-    it("should return a recipe when a valid ID is provided", async () => {
-      const mockRecipeId = "validRecipeId";
+  describe('getSingleRecipe', () => {
+    it('should return a recipe when a valid ID is provided', async () => {
+      const mockRecipeId = 'validRecipeId';
       const mockRecipe: Recipe = realRecipeData;
 
-      jest.spyOn(service, "getSingleRecipe").mockResolvedValueOnce(mockRecipe);
+      jest.spyOn(service, 'getSingleRecipe').mockResolvedValueOnce(mockRecipe);
 
       const result = await service.getSingleRecipe(mockRecipeId);
 
@@ -98,28 +98,28 @@ describe("RecipeController", () => {
       expect(result).toEqual(mockRecipe);
     });
 
-    it("should throw NotFoundException when an invalid ID is provided", async () => {
-      const mockInvalidRecipeId = "invalidRecipeId";
+    it('should throw NotFoundException when an invalid ID is provided', async () => {
+      const mockInvalidRecipeId = 'invalidRecipeId';
 
       jest
-        .spyOn(service, "getSingleRecipe")
+        .spyOn(service, 'getSingleRecipe')
         .mockRejectedValueOnce(new NotFoundException());
 
       await expect(
-        service.getSingleRecipe(mockInvalidRecipeId)
+        service.getSingleRecipe(mockInvalidRecipeId),
       ).rejects.toThrowError(NotFoundException);
 
       expect(service.getSingleRecipe).toHaveBeenCalledWith(mockInvalidRecipeId);
     });
   });
 
-  describe("getRecipesByCookId", () => {
-    it("should return recipes when a valid cook ID is provided", async () => {
-      const mockCookId = "validCookId";
+  describe('getRecipesByCookId', () => {
+    it('should return recipes when a valid cook ID is provided', async () => {
+      const mockCookId = 'validCookId';
       const mockRecipes: Recipe[] = [realRecipeData];
 
       jest
-        .spyOn(service, "getRecipesByCookId")
+        .spyOn(service, 'getRecipesByCookId')
         .mockResolvedValueOnce(mockRecipes);
 
       const result = await controller.getRecipesByCookId(mockCookId);
@@ -129,29 +129,29 @@ describe("RecipeController", () => {
       expect(result).toEqual(mockRecipes);
     });
 
-    it("should throw NotFoundException when no recipes found for the cook ID", async () => {
-      const mockInvalidCookId = "invalidCookId";
+    it('should throw NotFoundException when no recipes found for the cook ID', async () => {
+      const mockInvalidCookId = 'invalidCookId';
 
       jest
-        .spyOn(service, "getRecipesByCookId")
+        .spyOn(service, 'getRecipesByCookId')
         .mockRejectedValueOnce(new NotFoundException());
 
       await expect(
-        controller.getRecipesByCookId(mockInvalidCookId)
+        controller.getRecipesByCookId(mockInvalidCookId),
       ).rejects.toThrowError(NotFoundException);
 
       expect(service.getRecipesByCookId).toHaveBeenCalledWith(
-        mockInvalidCookId
+        mockInvalidCookId,
       );
     });
   });
 
-  describe("getFasting", () => {
-    it("should return recipes when fasting is true", async () => {
-      const mockFasting = "true";
+  describe('getFasting', () => {
+    it('should return recipes when fasting is true', async () => {
+      const mockFasting = 'true';
       const mockRecipes: Recipe[] = [realRecipeData];
 
-      jest.spyOn(service, "getFasting").mockResolvedValueOnce(mockRecipes);
+      jest.spyOn(service, 'getFasting').mockResolvedValueOnce(mockRecipes);
 
       const result = await controller.getFasting(mockFasting);
 
@@ -160,29 +160,29 @@ describe("RecipeController", () => {
       expect(result).toEqual(mockRecipes);
     });
 
-    it("should throw NotFoundException when no recipes found for fasting", async () => {
-      const mockFasting = "invalidType";
+    it('should throw NotFoundException when no recipes found for fasting', async () => {
+      const mockFasting = 'invalidType';
 
       jest
-        .spyOn(service, "getByType")
+        .spyOn(service, 'getByType')
         .mockRejectedValueOnce(new NotFoundException());
 
       await expect(controller.getFasting(mockFasting)).rejects.toThrowError(
-        NotFoundException
+        NotFoundException,
       );
 
       expect(service.getByType).toHaveBeenCalledWith(mockFasting);
     });
 
-    it("should throw NotFoundException when no recipes found for the type", async () => {
-      const mockFasting = "invalidType";
+    it('should throw NotFoundException when no recipes found for the type', async () => {
+      const mockFasting = 'invalidType';
 
       jest
-        .spyOn(service, "getByType")
+        .spyOn(service, 'getByType')
         .mockRejectedValueOnce(new NotFoundException());
 
       await expect(controller.getFasting(mockFasting)).rejects.toThrowError(
-        NotFoundException
+        NotFoundException,
       );
 
       expect(service.getByType).toHaveBeenCalledWith(mockFasting);
