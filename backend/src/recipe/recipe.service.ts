@@ -83,22 +83,18 @@ export class RecipeService {
   async find(query: Query): Promise<Recipe[]> {
     console.log(query);
     try {
-      const keyword: any = {};
+      const keywordWeSend: any = {};
 
       if (query.keyword) {
-        keyword.name = {
-          $regex: `${query.keyword}`,
-          $options: 'i',
-        };
-        keyword.type = {
-          $regex: `${query.category}`,
-          $options: 'i',
-        };
+        keywordWeSend.name = new RegExp(`.*${query.name}.*`, 'i');
+      }
+      if (query.category) {
+        keywordWeSend.type = query.category;
       }
 
-      console.log(keyword);
+      console.log(keywordWeSend);
 
-      const recipes = await this.recipeModel.find(keyword);
+      const recipes = await this.recipeModel.find(keywordWeSend);
       return recipes;
     } catch (error) {
       throw new NotFoundException('Recipe Not Found');
