@@ -23,6 +23,7 @@ export class UserService {
     if (!user) {
       throw new NotFoundException('Could not find user');
     }
+    console.log(user.firstName);
     return user;
   }
 
