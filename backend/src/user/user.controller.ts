@@ -43,7 +43,6 @@ export class UserController {
     @Body('email') email: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log('am here inside updateUser');
     this.uploadService.uploadFile(file);
 
     const serverBaseURL = 'http://10.0.2.2:3000/uploads/';
@@ -68,10 +67,9 @@ export class UserController {
     return this.userService.getAllUsers();
   }
 
-  @Patch()
+  @Patch('/changeRole')
   @Roles(Role.ADMIN)
   async updateRole(@Body('userId') userId: string, @Body('role') role: string) {
-    console.log('am here');
     try {
       this.userService.changeRole(userId, role);
     } catch {

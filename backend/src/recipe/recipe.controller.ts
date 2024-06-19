@@ -78,10 +78,7 @@ export class RecipeController {
 
   @Get('query')
   async search(@Query() query: ExpressQuery): Promise<Recipe[]> {
-    console.log(query, query.category);
-    if (query.category == 'All') {
-      return this.recipeService.showAll();
-    }
+    console.log(query);
     return this.recipeService.find(query);
   }
 
