@@ -67,7 +67,7 @@ export class UserController {
     return this.userService.getAllUsers();
   }
 
-  @Patch('/changeRole')
+  @Patch()
   @Roles(Role.ADMIN)
   async updateRole(@Body('userId') userId: string, @Body('role') role: string) {
     try {

@@ -78,10 +78,12 @@ export class RecipeController {
 
   @Get('query')
   async search(@Query() query: ExpressQuery): Promise<Recipe[]> {
-    console.log(query);
+    console.log(query, query.category);
+    if (query.category == 'All') {
+      return this.recipeService.showAll();
+    }
     return this.recipeService.find(query);
   }
-
   @Get(':id')
   async getProduct(@Param('id') prodId: string) {
     console.log(prodId);
