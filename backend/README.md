@@ -1,10 +1,6 @@
 # Firfir_tera-recipe-sharing-webapp
-Web Programming group project
-Group Members
-1.  Anatoli Derese………………………………… UGR/6458/14
-2.  Aregawi Fikre…………………………………… UGR/6531/14 
-3.  Eyob Derese……………………………………… UGR/6771/14 
-4.  Naol Daba……………………………………………… UGR/4777/14 
+Web Programming project
+1. Robel Amsalu
 
 Description:
 Firfir Tera stands as an innovative web application dedicated to offering a comprehensive collection of local and international recipes. It serves as a one-stop destination for culinary enthusiasts seeking instant access to diverse and delicious meals. Users simply log in to the platform and gain access to an array of meticulously detailed recipes, featuring step-by-step procedures, ingredient lists, serving sizes, and captivating visuals.
