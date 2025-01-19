@@ -1,6 +1,6 @@
 # Firfir_tera-recipe-sharing-webapp
 Web Programming project
-Robel Amsalu
+ 1. Robel Amsalu
 Description:
 Firfir tera is a web app that gives you instant access to local and international recipes. Just log in and start preparing delicious meals following the step-by-step procedures posted by kitchen enthusiasts all over the world.
 Firfir Tera stands as an innovative web application dedicated to offering a comprehensive collection of local and international recipes. It serves as a one-stop destination for culinary enthusiasts seeking instant access to diverse and delicious meals. Users simply log in to the platform and gain access to an array of meticulously detailed recipes, featuring step-by-step procedures, ingredient lists, serving sizes, and captivating visuals.
