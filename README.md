@@ -13,7 +13,7 @@ To support its vast collection of recipes and associated data, Firfir Tera has o
 
 In essence, Firfir Tera is a culinary haven, inviting users to explore, create, and enjoy a diverse array of flavors from around the world. Whether users seek comfort in familiar cuisines or wish to embark on new culinary adventures, Firfir Tera stands ready to facilitate their gastronomic journey.
 
-We used JWT Token based Authentication and Authorization and used nestjs Guards for Role-based authentication.
+I used JWT Token based Authentication and Authorization and used nestjs Guards for Role-based authentication.
 
 For it to function correctly. Please download the file and follow these steps:
 1. Run "npm install" in your terminal to install the required dependencies.
